@@ -89,8 +89,8 @@ void MainWindow::mousePressEvent(QMouseEvent *event)
         Y1=event->pos().y()-100;
      scene->addEllipse(event->pos().x()-25,
                        event->pos().y()-100 ,
-                       10,
-                       10,
+                       1,
+                       1,
                        QPen(Qt::NoPen),
                        QBrush(Qt::red));
         str1 = QString::number(x1) + "  " + QString::number(y1);
@@ -109,8 +109,8 @@ void MainWindow::mousePressEvent(QMouseEvent *event)
           Y2=event->pos().y()-100;
          scene->addEllipse(event->pos().x()-25,
                            event->pos().y()-100 ,
-                           100,
-                           100,
+                           1,
+                           1,
                            QPen(Qt::NoPen),
                            QBrush(Qt::red));
 
@@ -121,7 +121,21 @@ void MainWindow::mousePressEvent(QMouseEvent *event)
          schetchic=0;
          //ui->graphicsView->setScene(QLineF(X1,Y1,X2,Y2));
 
-         scene->addLine(X1,Y1,X2,Y2,QPen(Qt::green,10,Qt::SolidLine,Qt::RoundCap));
+         QLineF line;
+         line.setLine(X1,Y1,X2,Y2);
+         qreal an=line.angle();
+         //qreal len=line.length();
+
+          qreal DX=line.dx();
+          qreal DY=line.dy();
+
+         //qDebug()<<DX;
+         //qDebug()<<DY;
+
+         scene->addLine(X1,Y1,X2,Y2,QPen(Qt::green,1,Qt::SolidLine,Qt::RoundCap));
+
+         qDebug()<<an;
+         //QPainter(this);
                  /*scene->addLine(bsc.x(),
                              bsc.y(),
                              event->scenePos().x(),
