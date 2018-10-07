@@ -60,6 +60,54 @@
      </rect>
     </property>
    </widget>
+   <widget class="QPushButton" name="OK_NEWS">
+    <property name="geometry">
+     <rect>
+      <x>810</x>
+      <y>130</y>
+      <width>93</width>
+      <height>81</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>OK</string>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="comboBox">
+    <property name="geometry">
+     <rect>
+      <x>1100</x>
+      <y>100</y>
+      <width>73</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <item>
+     <property name="text">
+      <string>North</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>south</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>west</string>
+     </property>
+    </item>
+   </widget>
+   <widget class="QLineEdit" name="ANGLE">
+    <property name="geometry">
+     <rect>
+      <x>920</x>
+      <y>130</y>
+      <width>113</width>
+      <height>22</height>
+     </rect>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">

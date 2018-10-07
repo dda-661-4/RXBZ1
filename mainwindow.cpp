@@ -4,6 +4,7 @@
 #include "QDebug"
 #include <QGraphicsSceneMouseEvent>
 #include <QGraphicsScene>
+#include <QProcess>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -68,19 +69,12 @@ void MainWindow::on_go_clicked()
 
     ui->graphicsView->setScene(scene);
 
-    //Cloud *cloud=new Cloud();
-   //connect(scene, &Grid::signalTargetCoordinate,cloud,&Cloud::slotTarget);
-  //connect(scene, &Grid::signalTargetCoordinate,C,&Cloud::slotTarget);
-    /*QGraphicsScene *scene = new QGraphicsScene();
-    QPixmap m("D:/c++11/RXBZ/background.png");
-    scene->setBackgroundBrush(m.scaled(900,1000,Qt::IgnoreAspectRatio,Qt::SmoothTransformation));
-    ui->graphicsView->setScene(scene);*/
+
 }
 
 void MainWindow::mousePressEvent(QMouseEvent *event)
 {
-    if(schetchic==0)
-   {
+
       bsc = ui->graphicsView->pos();
 
        int x1 = event->x() - bsc.x();
@@ -97,124 +91,64 @@ void MainWindow::mousePressEvent(QMouseEvent *event)
 
        if((x1 < 0)||(x1 > scene->width())||(y1 < 0)||(y1 > scene->height()))
            str1 += "   out of scene";
-       schetchic++;
-    }
-   else
-   {
-         target = ui->graphicsView->pos();
+      // schetchic++;
 
-         int x2 = event->x() - target.x();
-         int y2 = event->y() - target.y();
-          X2=event->pos().x()-25;
-          Y2=event->pos().y()-100;
-         scene->addEllipse(event->pos().x()-25,
-                           event->pos().y()-100 ,
-                           1,
-                           1,
-                           QPen(Qt::NoPen),
-                           QBrush(Qt::red));
+         QPointF point;
+         point.setX(X1);
+         point.setY(Y1);
+         qDebug()<<X1<<Y1;
 
-         str2 = QString::number(x2) + "  " + QString::number(y2);
+         line.setP1(point);
+         line.setAngle(angl);
+         line.setLength(len);
+         scene->addLine(line,QPen(Qt::green));
+         point=line.p2();
 
-         if((x2 < 0)||(x2 > scene->width())||(y2 < 0)||(y2 > scene->height()))
-             str2 += "   out of scene";
-         schetchic=0;
-         //ui->graphicsView->setScene(QLineF(X1,Y1,X2,Y2));
 
-         QLineF line;
-         line.setLine(X1,Y1,X2,Y2);
-         qreal an=line.angle();
+
+        /* void count()
+         {
+             blablabla
+         }
+         int main()
+         {
+             QProcess p = new QProcess(count());p.start();
+         }*/
+
+         //line.setAngle(angl);
+         //angl=line.angle();
+         //qDebug()<<angl;
+         //line.setLine(X1,Y1,X2,Y2);
+         //qDebug()<<line.angle()<<line.length()<<line.p2();
+         //line=line.fromPolar(len,angl);
+         //line.setP1(point);
+
+         //qDebug()<<line.angle()<<line.length()<<line.p2();
+        //scene->addLine(line,QPen(Qt::red));
+         //qDebug()<<line2.length();
+
+         //qDebug()<<line.angle();
+         //line.setAngle(angl);
+
+         //angl=line.angle();
+         //qDebug()<<angl;
          //qreal len=line.length();
 
-          qreal DX=line.dx();
-          qreal DY=line.dy();
+        // qreal DX=line.dx();
+         // qreal DY=line.dy();
 
          //qDebug()<<DX;
          //qDebug()<<DY;
 
-         scene->addLine(X1,Y1,X2,Y2,QPen(Qt::green,1,Qt::SolidLine,Qt::RoundCap));
+         //scene->addLine(X1,Y1,X2,Y2,QPen(Qt::green,1,Qt::SolidLine,Qt::RoundCap));
 
-         qDebug()<<an;
-         //QPainter(this);
-                 /*scene->addLine(bsc.x(),
-                             bsc.y(),
-                             event->scenePos().x(),
-                             event->scenePos().y(),
-                             QPen(Qt::green,10,Qt::SolidLine,Qt::RoundCap));*/
-           qDebug()<<str1<<str2;
+         //qDebug()<<an;
+
     }
-}
-    /*scene->addEllipse(event->scenePos().x()-25,
-                   event->scenePos().y()-100 ,
-                   10,
-                   10,
-                   QPen(Qt::NoPen),
-                   QBrush(Qt::red));
-
-        // Сохраняем координаты точки нажатия
-        bsc = event->scenePos();
-        qDebug()<<bsc;*/
 
 
-/*void MainWindow::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
+
+void MainWindow::on_OK_NEWS_clicked()
 {
-    // Отрисовываем линии с использованием предыдущей координаты
-   /* scene->addLine(bsc.x(),
-            bsc.y(),
-            event->scenePos().x(),
-            event->scenePos().y(),
-            QPen(Qt::green,10,Qt::SolidLine,Qt::RoundCap));
-    // Обновляем данные о предыдущей координате
-    bsc = event->pos();
-}*/
-
-    /* if(schetchic==0)
-    {
-       bsc = ui->graphicsView->pos();
-
-        int x1 = event->x() - bsc.x();
-        int y1 = event->y() - bsc.y();
-        X1=x1;
-        Y1=y1;
-
-         str1 = QString::number(x1) + "  " + QString::number(y1);
-
-        if((x1 < 0)||(x1 > scene->width())||(y1 < 0)||(y1 > scene->height()))
-            str1 += "   out of scene";
-        schetchic++;
-     }
-    else
-    {
-          target = ui->graphicsView->pos();
-
-          int x2 = event->x() - target.x();
-          int y2 = event->y() - target.y();
-
-          X2=x2;
-          Y2=y2;
-          str2 = QString::number(x2) + "  " + QString::number(y2);
-
-          if((x2 < 0)||(x2 > scene->width())||(y2 < 0)||(y2 > scene->height()))
-              str2 += "   out of scene";
-          schetchic=0;
-
-           //scene()->addItem(new Line(QLineF(X1,Y1,X2,Y2), scene()));
-
-          //ui->graphicsView->setScene(QLineF(X1,Y1,X2,Y2));
-
-          QPainter painter;
-          painter.setPen(QPen(Qt::black,1));
-          //QLineF angleline;
-         // angleline.setP1(QPointF(bsc));
-         // angleline.setP2(QPointF(target));
-
-        painter.drawLine(QPointF(bsc),QPointF(target));
-*
-            qDebug()<<str1<<str2;
-    }
-
-
-
-        //ui->label->setText(str);
-}*/
-
+    angl=ui->ANGLE->text().toInt();
+}

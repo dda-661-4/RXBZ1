@@ -26,9 +26,15 @@ public:
     QString str1,str2;
      QPointF bsc,target;
     qreal X1,Y1,X2,Y2;
+    QLineF line;
+    qreal len=5;
+    qreal angl;
+
 
 private slots:
     void on_go_clicked();
+
+    void on_OK_NEWS_clicked();
 
 private:
     Ui::MainWindow *ui;
