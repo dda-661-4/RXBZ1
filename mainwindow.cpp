@@ -98,13 +98,29 @@ void MainWindow::mousePressEvent(QMouseEvent *event)
          point.setY(Y1);
          qDebug()<<X1<<Y1;
 
-         line.setP1(point);
-         line.setAngle(angl);
+         //line.setP1(point);
+         /*line.setAngle(angl);
          line.setLength(len);
          scene->addLine(line,QPen(Qt::green));
+         qDebug()<<line.p1()<<line.p2();
          point=line.p2();
+*/
+         for(qreal i=0;i<100;i++)
+        {
+             line.setP1(point);
+             qDebug()<<line.p1();
+             line.setLength(len);
+             line.setAngle(angl);
+             point=line.p2();
+             X2=line.x2();
+             Y2=line.y2();
+             scene->addEllipse(X2,Y2,i,i,QPen(Qt::red));
+             //scene->addLine(line,QPen(Qt::red));
+             len=len+10;
+             qDebug()<<len;
 
-
+        }
+         len=5;
 
         /* void count()
          {
