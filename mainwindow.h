@@ -2,11 +2,11 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "QGraphicsScene"
+#include <QGraphicsScene>
 #include "QPainter"
 #include <grid.h>
 #include <QString>
-#include <QGraphicsSceneMouseEvent>
+#include <QMouseEvent>
 
 namespace Ui {
 class MainWindow;
@@ -20,16 +20,8 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
-    QString coord1;
-    QString coord2;
-    int schetchic=0;
-    QString str1,str2;
-     QPointF bsc,target;
-    qreal X1,Y1,X2,Y2;
-    QLineF line;
-    qreal len=5;
-    qreal angl;
-
+    qreal len=4;
+    qreal angl=90;
 
 private slots:
     void on_go_clicked();
@@ -38,12 +30,14 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+    //Grid * item;
     QGraphicsScene  *scene;
     QPixmap image;
     QImage *imageObject;
+    QPainter painter;
+
+    //QRectF rect;
     void mousePressEvent(QMouseEvent *event);
-    //void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
-                                      //QMOUSEEvent
 };
 
 #endif // MAINWINDOW_H

@@ -2,34 +2,101 @@
 #include "ui_mainwindow.h"
 #include "QFileDialog"
 #include "QDebug"
-#include <QGraphicsSceneMouseEvent>
+#include <QMouseEvent>
 #include <QGraphicsScene>
 #include <QProcess>
+#include <QSizeF>
+#include <QRectF>
+#include <QGraphicsView>
+#include <QWidget>
+#include <QPainter>
+#include <grid.h>
+
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    //scene = new QGraphicsScene(ui->graphicsView);
-    //ui->graphicsView->setScene(scene);
-       // ui->graphicsView->setMouseTracking(true);
-    //ui->graphicsView->setPalette(Qt::transparent);
-    //ui->graphicsView->setAttribute(Qt::WA_TranslucentBackground);
-    //ui->graphicsView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff); // Отключаем скроллбар по вертикали
+
+    scene= new QGraphicsScene();
+    ui->graphicsView->setScene(scene);
+
+   // ui->graphicsView->setRenderHint(QPainter::Antialiasing);
+   // ui->graphicsView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff); // Отключаем скроллбар по вертикали
     //ui->graphicsView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    //ui->graphicsView->
 
-   // Grid* obj = new Grid();
-    //ui->graphicsView->setScene(obj->retscene());
-
-   //this->setStyleSheet(" background-image: url(D:/c++11/RXBZ/background.png);");
-
+    scene->setSceneRect(0,0,500,500);
+    //ui->graphicsView->setMaximumHeight(500);
+   // ui->graphicsView->setMaximumWidth(500);
+     //ui->graphicsView->setCursor();
+   //  scene->setSceneRect(0,0,500,500);
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::mousePressEvent(QMouseEvent *event)
+{
+    qreal X,Y,X2,Y2;
+
+ QPointF point = ui->graphicsView->mapFromParent(event->pos());
+
+ //len=100;
+
+   QLineF line;
+   line.setP1(point);
+   line.setAngle(angl);
+   line.setLength(len);
+
+   scene->addLine(line,QPen(Qt::red));
+
+   X2=line.x2();
+   Y2=line.y2();
+
+ X=point.x();
+ Y=point.y();
+
+ qreal height=4,width=4;
+
+
+ QRectF rect;
+
+ scene->addEllipse(rect,QPen(Qt::green));
+
+qDebug()<<point;
+
+ line.setP1(point);
+
+for(qreal i=2;i<500;i=i+6)
+       {
+            //qDebug()<<line.p1();
+            line.setLength(len);
+            line.setAngle(angl);
+            point=line.p2();
+              //scene->addLine(line,QPen(Qt::red));
+            X2=line.x2();
+            Y2=line.y2();
+            qreal radius=i/2;
+            rect.setRect(X2-radius,Y2-radius,i,i);
+            scene->addEllipse(rect,QPen(Qt::green));
+            //scene->addLine(line,QPen(Qt::red));
+            len=len+6;
+            //qDebug()<<len;
+       }
+        len=4;
+
+
+ scene->addLine(line,QPen(Qt::red));
+ //scene->addEllipse(X,Y,30,30,QPen(Qt::green));
+
+
+// scene->addEllipse()
+
+ qDebug()<<event->pos()<<point;
+
 }
 
 /*void MainWindow::Gra
@@ -55,10 +122,8 @@ void MainWindow::on_go_clicked()
     QString imagePath="D:/c++11/RXBZ/background.png";
     imageObject->load(imagePath);
     image = QPixmap::fromImage(*imageObject);
-    scene= new QGraphicsScene(this);
     scene->addPixmap(image);
     scene->setSceneRect(image.rect());
-    ui->graphicsView->setScene(scene);
     for (qreal y=0; y<800.0; y+=30)
             {
                 for (qreal x=0; x<1400.0; x+=30)
@@ -66,101 +131,7 @@ void MainWindow::on_go_clicked()
                    scene->addRect(x, y, 30.0, 30.0, Qt::SolidLine, QBrush(QColor(40, 20, 20, 100)));
                 }                                                  //    solidline      ( 35 80 124),qt:: SolidPattern
             }
-
-    ui->graphicsView->setScene(scene);
-
-
 }
-
-void MainWindow::mousePressEvent(QMouseEvent *event)
-{
-
-      bsc = ui->graphicsView->pos();
-
-       int x1 = event->x() - bsc.x();
-       int y1 = event->y() - bsc.y();
-        X1=event->pos().x()-25;
-        Y1=event->pos().y()-100;
-     scene->addEllipse(event->pos().x()-25,
-                       event->pos().y()-100 ,
-                       1,
-                       1,
-                       QPen(Qt::NoPen),
-                       QBrush(Qt::red));
-        str1 = QString::number(x1) + "  " + QString::number(y1);
-
-       if((x1 < 0)||(x1 > scene->width())||(y1 < 0)||(y1 > scene->height()))
-           str1 += "   out of scene";
-      // schetchic++;
-
-         QPointF point;
-         point.setX(X1);
-         point.setY(Y1);
-         qDebug()<<X1<<Y1;
-
-         //line.setP1(point);
-         /*line.setAngle(angl);
-         line.setLength(len);
-         scene->addLine(line,QPen(Qt::green));
-         qDebug()<<line.p1()<<line.p2();
-         point=line.p2();
-*/
-         for(qreal i=0;i<100;i++)
-        {
-             line.setP1(point);
-             qDebug()<<line.p1();
-             line.setLength(len);
-             line.setAngle(angl);
-             point=line.p2();
-             X2=line.x2();
-             Y2=line.y2();
-             scene->addEllipse(X2,Y2,i,i,QPen(Qt::red));
-             //scene->addLine(line,QPen(Qt::red));
-             len=len+10;
-             qDebug()<<len;
-
-        }
-         len=5;
-
-        /* void count()
-         {
-             blablabla
-         }
-         int main()
-         {
-             QProcess p = new QProcess(count());p.start();
-         }*/
-
-         //line.setAngle(angl);
-         //angl=line.angle();
-         //qDebug()<<angl;
-         //line.setLine(X1,Y1,X2,Y2);
-         //qDebug()<<line.angle()<<line.length()<<line.p2();
-         //line=line.fromPolar(len,angl);
-         //line.setP1(point);
-
-         //qDebug()<<line.angle()<<line.length()<<line.p2();
-        //scene->addLine(line,QPen(Qt::red));
-         //qDebug()<<line2.length();
-
-         //qDebug()<<line.angle();
-         //line.setAngle(angl);
-
-         //angl=line.angle();
-         //qDebug()<<angl;
-         //qreal len=line.length();
-
-        // qreal DX=line.dx();
-         // qreal DY=line.dy();
-
-         //qDebug()<<DX;
-         //qDebug()<<DY;
-
-         //scene->addLine(X1,Y1,X2,Y2,QPen(Qt::green,1,Qt::SolidLine,Qt::RoundCap));
-
-         //qDebug()<<an;
-
-    }
 
 
 

@@ -1,32 +1,37 @@
 #ifndef GRID_H
 #define GRID_H
-#include "QGraphicsScene"
-#include <QMouseEvent>
+#include <QGraphicsItem>
+#include <QGraphicsScene>
+#include <QGraphicsSceneMouseEvent>
+#include <QTimer>
+#include <QDebug>
 
-class Grid : public QGraphicsScene
+class Grid : public QGraphicsItem
 {
-public:
-    Grid();
-    ~Grid();
-    QGraphicsScene *scene;
-     QGraphicsScene* retscene();
-     //Cloud *cloud;
 
-signals:
-    // Сигнал для передачи координат положения курсора мыши
-    //void signalTargetCoordinate(QPointF point);
+        public:
+            Grid()
+            {
+                setFlag(ItemIgnoresTransformations, true);
+            }
 
-private:
-    // Функция, в которой производится отслеживание положения мыши
+        /*    QRectF boundingRect() const
+            {
+                //return QRectF(-5, -5, 10, 10);
+            }*/
 
-
-
-   // QGraphicsScene* retscene();
-protected:
-   //virtual void mousePressEvent(QGraphicsSceneMouseEvent * mouseEvent);
-private:
-
-};
-
+            void paint(QPainter *painter)
+            {
+                QPen pen = painter->pen();
+                pen.setCosmetic(true);
+                pen.setWidth(5);
+                pen.setColor(QColor(Qt::red));
+                painter->setPen(pen);
+                QBrush brush = painter->brush();
+                brush.setStyle(Qt::SolidPattern);
+                painter->setBrush(brush);
+                painter->drawEllipse(250,250, 10, 10);
+            }
+        };
 
 #endif // GRID_H
