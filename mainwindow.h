@@ -23,6 +23,11 @@ public:
     qreal len=4;
     qreal angl=90;
 
+    qreal rad=10;
+    qreal rad0=6;
+    QPointF mass[100];
+
+
 private slots:
     void on_go_clicked();
 

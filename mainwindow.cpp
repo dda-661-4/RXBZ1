@@ -4,14 +4,12 @@
 #include "QDebug"
 #include <QMouseEvent>
 #include <QGraphicsScene>
-#include <QProcess>
-#include <QSizeF>
 #include <QRectF>
 #include <QGraphicsView>
 #include <QWidget>
-#include <QPainter>
-#include <grid.h>
 
+
+ int schetchic=0;
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -22,11 +20,12 @@ MainWindow::MainWindow(QWidget *parent) :
     scene= new QGraphicsScene();
     ui->graphicsView->setScene(scene);
 
-   // ui->graphicsView->setRenderHint(QPainter::Antialiasing);
-   // ui->graphicsView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff); // Отключаем скроллбар по вертикали
-    //ui->graphicsView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    ui->graphicsView->setRenderHint(QPainter::Antialiasing);
+    ui->graphicsView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff); // Отключаем скроллбар по вертикали
+    ui->graphicsView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
     scene->setSceneRect(0,0,500,500);
+
     //ui->graphicsView->setMaximumHeight(500);
    // ui->graphicsView->setMaximumWidth(500);
      //ui->graphicsView->setCursor();
@@ -40,11 +39,14 @@ MainWindow::~MainWindow()
 
 void MainWindow::mousePressEvent(QMouseEvent *event)
 {
+
     qreal X,Y,X2,Y2;
+     QRectF rect;
 
- QPointF point = ui->graphicsView->mapFromParent(event->pos());
+    QPointF point = ui->graphicsView->mapFromParent(event->pos());
 
- //len=100;
+    if(event->button()==Qt::LeftButton)
+   {
 
    QLineF line;
    line.setP1(point);
@@ -56,13 +58,12 @@ void MainWindow::mousePressEvent(QMouseEvent *event)
    X2=line.x2();
    Y2=line.y2();
 
- X=point.x();
- Y=point.y();
+    X=point.x();
+    Y=point.y();
 
  qreal height=4,width=4;
 
 
- QRectF rect;
 
  scene->addEllipse(rect,QPen(Qt::green));
 
@@ -70,29 +71,68 @@ qDebug()<<point;
 
  line.setP1(point);
 
-for(qreal i=2;i<500;i=i+6)
+ bool check=false;
+
+for(qreal i=2;i<500;i=i+1)//i -radius of ellipse
        {
-            //qDebug()<<line.p1();
+           QLineF l;
+
             line.setLength(len);
             line.setAngle(angl);
             point=line.p2();
-              //scene->addLine(line,QPen(Qt::red));
+
             X2=line.x2();
             Y2=line.y2();
+
+            qDebug()<<schetchic;
+
+            for(int g=0;g<schetchic;g++)
+            {
+                qDebug()<<"STOP";
+                l.setLine(mass[g].x(),mass[g].y(),X2,Y2);
+                if((X2-mass[g].x())*(X2-mass[g].x())+(Y2-mass[g].y())*(Y2-mass[g].y())<(i+rad)*(i+rad))
+                {
+                    check = true;
+                    break;
+                    qDebug()<<"STOP";
+                }
+            }
+
+
+
             qreal radius=i/2;
             rect.setRect(X2-radius,Y2-radius,i,i);
             scene->addEllipse(rect,QPen(Qt::green));
-            //scene->addLine(line,QPen(Qt::red));
-            len=len+6;
-            //qDebug()<<len;
+            if(check==true)
+            {
+
+                break;
+            }
+            len=len+1;
+
        }
         len=4;
-
 
  scene->addLine(line,QPen(Qt::red));
  //scene->addEllipse(X,Y,30,30,QPen(Qt::green));
 
+    }
+    else
+    {
+        mass[schetchic]=point;
+        X=point.x();
+        Y=point.y();
 
+        rect.setRect(X-3,Y-3,rad0,rad0);
+        scene->addEllipse(rect,QPen(Qt::yellow));
+
+        rect.setRect(X-5,Y-5,rad,rad);
+        scene->addEllipse(rect,QPen(Qt::blue));
+
+        qDebug()<<"left"<<mass[schetchic];
+
+        schetchic++;
+    }
 // scene->addEllipse()
 
  qDebug()<<event->pos()<<point;
@@ -118,8 +158,8 @@ void Ellipse::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, Q
 }*/
 
 void MainWindow::on_go_clicked()
-{ //QString imaePath = QFileDialog::getOpenFileName(this,tr("Open File"),"",tr("JPEG(*.jpg *.jpeg);;PNG(*.png)"));
-    QString imagePath="D:/c++11/RXBZ/background.png";
+{ QString imagePath = QFileDialog::getOpenFileName(this,tr("Open File"),"",tr("JPEG(*.jpg *.jpeg);;PNG(*.png)"));
+    //QString imagePath="D:/c++11/RXBZ/background.png";
     imageObject->load(imagePath);
     image = QPixmap::fromImage(*imageObject);
     scene->addPixmap(image);
@@ -132,7 +172,6 @@ void MainWindow::on_go_clicked()
                 }                                                  //    solidline      ( 35 80 124),qt:: SolidPattern
             }
 }
-
 
 
 void MainWindow::on_OK_NEWS_clicked()
