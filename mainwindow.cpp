@@ -7,7 +7,7 @@
 #include <QRectF>
 #include <QGraphicsView>
 #include <QWidget>
-
+#include <QMutex>
 
  int schetchic=0;
 
@@ -16,7 +16,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-
     scene= new QGraphicsScene();
     ui->graphicsView->setScene(scene);
 
@@ -26,10 +25,11 @@ MainWindow::MainWindow(QWidget *parent) :
 
     scene->setSceneRect(0,0,500,500);
 
-    //ui->graphicsView->setMaximumHeight(500);
-   // ui->graphicsView->setMaximumWidth(500);
-     //ui->graphicsView->setCursor();
-   //  scene->setSceneRect(0,0,500,500);
+    MainWindow::on_go_clicked();
+
+    timer= new QTimer();
+    connect(timer,SIGNAL(timeout()),this,SLOT(slotTimerAlarm()));
+      timer->start(1000);
 }
 
 MainWindow::~MainWindow()
@@ -37,17 +37,29 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+void MainWindow::slotTimerAlarm()
+{
+   //qreal z=100,z1=100;
+   //t_rect.setRect(z,z1,time,time);
+ // scene->addEllipse(t_rect,QPen(Qt::red));
+          //mutex.lock();
+           time++;
+           ui->time->setText(QString::number(time));
+           qDebug()<<"time1";
+           //mutex.unlock();
+}
+
 void MainWindow::mousePressEvent(QMouseEvent *event)
 {
 
-    qreal X,Y,X2,Y2;
-     QRectF rect;
+     time=0;
 
-    QPointF point = ui->graphicsView->mapFromParent(event->pos());
+     point = ui->graphicsView->mapFromParent(event->pos());
 
+    // mutex.lock();
     if(event->button()==Qt::LeftButton)
    {
-
+  qDebug()<<"time";
    QLineF line;
    line.setP1(point);
    line.setAngle(angl);
@@ -61,22 +73,15 @@ void MainWindow::mousePressEvent(QMouseEvent *event)
     X=point.x();
     Y=point.y();
 
- qreal height=4,width=4;
-
-
-
- scene->addEllipse(rect,QPen(Qt::green));
-
-qDebug()<<point;
-
  line.setP1(point);
 
  bool check=false;
 
 for(qreal i=2;i<500;i=i+1)//i -radius of ellipse
        {
+      //timer->stop();
            QLineF l;
-
+  qDebug()<<"time";
             line.setLength(len);
             line.setAngle(angl);
             point=line.p2();
@@ -84,38 +89,28 @@ for(qreal i=2;i<500;i=i+1)//i -radius of ellipse
             X2=line.x2();
             Y2=line.y2();
 
-            qDebug()<<schetchic;
-
             for(int g=0;g<schetchic;g++)
             {
-                qDebug()<<"STOP";
                 l.setLine(mass[g].x(),mass[g].y(),X2,Y2);
                 if((X2-mass[g].x())*(X2-mass[g].x())+(Y2-mass[g].y())*(Y2-mass[g].y())<(i+rad)*(i+rad))
                 {
                     check = true;
                     break;
-                    qDebug()<<"STOP";
                 }
             }
 
-
-
-            qreal radius=i/2;
-            rect.setRect(X2-radius,Y2-radius,i,i);
+            qreal radius=time/2;
+            rect.setRect(X2-radius,Y2-radius,time,time);
             scene->addEllipse(rect,QPen(Qt::green));
             if(check==true)
             {
-
-                break;
+               break;
             }
             len=len+1;
-
        }
         len=4;
 
  scene->addLine(line,QPen(Qt::red));
- //scene->addEllipse(X,Y,30,30,QPen(Qt::green));
-
     }
     else
     {
@@ -129,37 +124,21 @@ for(qreal i=2;i<500;i=i+1)//i -radius of ellipse
         rect.setRect(X-5,Y-5,rad,rad);
         scene->addEllipse(rect,QPen(Qt::blue));
 
-        qDebug()<<"left"<<mass[schetchic];
+        //qDebug()<<"left"<<mass[schetchic];
 
         schetchic++;
     }
+
+   // mutex.unlock();
 // scene->addEllipse()
 
- qDebug()<<event->pos()<<point;
+// qDebug()<<event->pos()<<point;
 
 }
 
-/*void MainWindow::Gra
-
-void Ellipse::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
-{
-    painter->setPen(QPen(Qt::black, 2));
-
-
-    QRectF rect(endPoint().x() > startPoint().x() ? startPoint().x() : endPoint().x(),
-                endPoint().y() > startPoint().y() ? startPoint().y() : endPoint().y(),
-                qAbs(endPoint().x() - startPoint().x()),
-                qAbs(endPoint().y() - startPoint().y()));
-
-    painter->drawEllipse(rect);
-
-    Q_UNUSED(option)
-    Q_UNUSED(widget)
-}*/
-
 void MainWindow::on_go_clicked()
-{ QString imagePath = QFileDialog::getOpenFileName(this,tr("Open File"),"",tr("JPEG(*.jpg *.jpeg);;PNG(*.png)"));
-    //QString imagePath="D:/c++11/RXBZ/background.png";
+{ //QString imagePath = QFileDialog::getOpenFileName(this,tr("Open File"),"",tr("JPEG(*.jpg *.jpeg);;PNG(*.png)"));
+    imagePath="D:/c++11/RXBZ/background.png";
     imageObject->load(imagePath);
     image = QPixmap::fromImage(*imageObject);
     scene->addPixmap(image);
@@ -173,8 +152,8 @@ void MainWindow::on_go_clicked()
             }
 }
 
-
 void MainWindow::on_OK_NEWS_clicked()
 {
     angl=ui->ANGLE->text().toInt();
 }
+

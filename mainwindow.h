@@ -4,9 +4,12 @@
 #include <QMainWindow>
 #include <QGraphicsScene>
 #include "QPainter"
-#include <grid.h>
 #include <QString>
 #include <QMouseEvent>
+#include <QTimer>
+#include <QMutex>
+
+
 
 namespace Ui {
 class MainWindow;
@@ -25,13 +28,25 @@ public:
 
     qreal rad=10;
     qreal rad0=6;
-    QPointF mass[100];
+    QPointF mass[10];
+    QPointF point;
+    qreal X,Y,X2,Y2;
+    QRectF rect;
 
+     //QMutex mutex;
+     int time=0;
+     QRect t_rect;
+
+    QTimer *timer;
+
+    //QRectF rect;
 
 private slots:
     void on_go_clicked();
 
     void on_OK_NEWS_clicked();
+
+    void slotTimerAlarm();
 
 private:
     Ui::MainWindow *ui;
@@ -39,10 +54,10 @@ private:
     QGraphicsScene  *scene;
     QPixmap image;
     QImage *imageObject;
-    QPainter painter;
+    //QPainter painter;
+     QString imagePath;
 
-    //QRectF rect;
-    void mousePressEvent(QMouseEvent *event);
+     void mousePressEvent(QMouseEvent *event);
 };
 
 #endif // MAINWINDOW_H

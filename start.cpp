@@ -1,9 +1,11 @@
 #include "start.h"
 #include "ui_start.h"
 #include <mainwindow.h>
+#include <chimio.h>
+
 
 MainWindow *openWindow;
-
+CHIMIO * openChimio;
 
 start::start(QWidget *parent) :
     QMainWindow(parent),
@@ -12,6 +14,9 @@ start::start(QWidget *parent) :
     ui->setupUi(this);
     openWindow=new MainWindow();
       connect(ui->RADIO,SIGNAL(clicked()),this,SLOT(on_RADIO_clicked()));
+    openChimio=new CHIMIO();
+      connect(ui->CHIMIO,SIGNAL(clicked()),this,SLOT(on_CHIMIO_clicked()));
+
 }
 
 start::~start()
@@ -22,11 +27,12 @@ start::~start()
 void start::on_RADIO_clicked()
 {
     openWindow->show();
-    this->close();
+    //this->close();
 
 }
 
 void start::on_CHIMIO_clicked()
 {
+  openChimio->show();
 
 }

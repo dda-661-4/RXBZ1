@@ -14,9 +14,13 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    grid.cpp
+    start.cpp \
+    chimio.cpp
 
 HEADERS  += mainwindow.h \
-    grid.h
+    start.h \
+    chimio.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    start.ui \
+    chimio.ui
