@@ -10,7 +10,6 @@
 #include <QMutex>
 
 
-
 namespace Ui {
 class MainWindow;
 }
@@ -23,17 +22,20 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+    bool R=false;
+    bool L=false;
+    int t=5;
+
     qreal len=4;
     qreal angl=90;
 
-    qreal rad=10;
-    qreal rad0=6;
+    qreal rad=6;
+    qreal rad0=3;
     QPointF mass[10];
     QPointF point;
     qreal X,Y,X2,Y2;
     QRectF rect;
 
-     //QMutex mutex;
      int time=0;
      QRect t_rect;
 

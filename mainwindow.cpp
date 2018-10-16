@@ -39,81 +39,134 @@ MainWindow::~MainWindow()
 
 void MainWindow::slotTimerAlarm()
 {
-   //qreal z=100,z1=100;
-   //t_rect.setRect(z,z1,time,time);
- // scene->addEllipse(t_rect,QPen(Qt::red));
-          //mutex.lock();
-           time++;
+ QLineF line;
+     time++;
+     t=t+10;
+    if(L==true)
+    {
+        line.setP1(point);
+        line.setAngle(angl);
+        line.setLength(len);
+        scene->addLine(line,QPen(Qt::red));
+
+        X2=line.x2();
+        Y2=line.y2();
+         X=point.x();
+         Y=point.y();
+      line.setP1(point);
+     // bool check=false;
+     // QLineF l;
+
+       line.setLength(len);
+      // line.setAngle(angl);
+       point=line.p2();
+
+       X2=line.x2();
+       Y2=line.y2();
+
+      /* for(int g=0;g<schetchic;g++)
+       {
+           l.setLine(mass[g].x(),mass[g].y(),X2,Y2);
+           if((X2-mass[g].x())*(X2-mass[g].x())+(Y2-mass[g].y())*(Y2-mass[g].y())<(time+rad)*(time+rad))
+           {
+               check = true;
+             //  break;
+           }
+       }*/
+
+       qreal radius=t/2;
+       rect.setRect(X2-radius,Y2-radius,t,t);
+       scene->addEllipse(rect,QPen(Qt::green));
+       /* if(check==true)
+       {
+          //break;
+       }*/
+       len=len+1;
+  }
+
+  // len=4;*/
+
+//scene->addLine(line,QPen(Qt::red));
+
+      qDebug()<<" L ";
+
            ui->time->setText(QString::number(time));
-           qDebug()<<"time1";
-           //mutex.unlock();
+           //qDebug()<<"time1";
 }
 
 void MainWindow::mousePressEvent(QMouseEvent *event)
 {
 
-     time=0;
-
+    len=4;
      point = ui->graphicsView->mapFromParent(event->pos());
 
-    // mutex.lock();
-    if(event->button()==Qt::LeftButton)
-   {
-  qDebug()<<"time";
-   QLineF line;
-   line.setP1(point);
-   line.setAngle(angl);
-   line.setLength(len);
+     if(event->button()==Qt::LeftButton)
+     {
+         time=0;
+         t=5;
+         L=true;
+     }
 
-   scene->addLine(line,QPen(Qt::red));
+   /*if(event->button()==Qt::LeftButton)
+     {
+             qDebug()<<"time";
+              QLineF line;
+              line.setP1(point);
+              line.setAngle(angl);
+              line.setLength(len);
 
-   X2=line.x2();
-   Y2=line.y2();
+              scene->addLine(line,QPen(Qt::red));
 
-    X=point.x();
-    Y=point.y();
+              X2=line.x2();
+              Y2=line.y2();
 
- line.setP1(point);
+               X=point.x();
+               Y=point.y();
 
- bool check=false;
+            line.setP1(point);
 
-for(qreal i=2;i<500;i=i+1)//i -radius of ellipse
-       {
-      //timer->stop();
-           QLineF l;
-  qDebug()<<"time";
-            line.setLength(len);
-            line.setAngle(angl);
-            point=line.p2();
+            bool check=false;
 
-            X2=line.x2();
-            Y2=line.y2();
+           //for(qreal i=2;i<500;i=i+1)//i -radius of ellipse
+                //  {
+                    while(true)
+                    {
+                      QLineF l;
+             qDebug()<<"time";
+                       line.setLength(len);
+                       line.setAngle(angl);
+                       point=line.p2();
 
-            for(int g=0;g<schetchic;g++)
-            {
-                l.setLine(mass[g].x(),mass[g].y(),X2,Y2);
-                if((X2-mass[g].x())*(X2-mass[g].x())+(Y2-mass[g].y())*(Y2-mass[g].y())<(i+rad)*(i+rad))
-                {
-                    check = true;
-                    break;
-                }
-            }
+                       X2=line.x2();
+                       Y2=line.y2();
 
-            qreal radius=time/2;
-            rect.setRect(X2-radius,Y2-radius,time,time);
-            scene->addEllipse(rect,QPen(Qt::green));
-            if(check==true)
-            {
-               break;
-            }
-            len=len+1;
-       }
-        len=4;
+                       for(int g=0;g<schetchic;g++)
+                       {
+                           l.setLine(mass[g].x(),mass[g].y(),X2,Y2);
+                           if((X2-mass[g].x())*(X2-mass[g].x())+(Y2-mass[g].y())*(Y2-mass[g].y())<(time+rad)*(time+rad))
+                           {
+                               check = true;
+                               break;
+                           }
+                       }
 
- scene->addLine(line,QPen(Qt::red));
-    }
-    else
-    {
+                       qreal radius=time/2;
+                       rect.setRect(X2-radius,Y2-radius,time,time);
+                       scene->addEllipse(rect,QPen(Qt::green));
+                       if(check==true)
+                       {
+                          break;
+                       }
+                       len=len+1;
+                  }
+
+                   len=4;
+
+            scene->addLine(line,QPen(Qt::red));
+           }
+           */
+    if(event->button()==Qt::RightButton)
+      {
         mass[schetchic]=point;
         X=point.x();
         Y=point.y();
@@ -124,16 +177,8 @@ for(qreal i=2;i<500;i=i+1)//i -radius of ellipse
         rect.setRect(X-5,Y-5,rad,rad);
         scene->addEllipse(rect,QPen(Qt::blue));
 
-        //qDebug()<<"left"<<mass[schetchic];
-
         schetchic++;
     }
-
-   // mutex.unlock();
-// scene->addEllipse()
-
-// qDebug()<<event->pos()<<point;
-
 }
 
 void MainWindow::on_go_clicked()
@@ -150,6 +195,10 @@ void MainWindow::on_go_clicked()
                    scene->addRect(x, y, 30.0, 30.0, Qt::SolidLine, QBrush(QColor(40, 20, 20, 100)));
                 }                                                  //    solidline      ( 35 80 124),qt:: SolidPattern
             }
+
+    R=false;
+    L=false;
+
 }
 
 void MainWindow::on_OK_NEWS_clicked()
