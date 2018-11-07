@@ -7,6 +7,7 @@
 #include <QDebug>
 #include <QLineEdit>
 #include<windows.h>
+#include <mainwindow.h>
 
 class Tcl:public QObject
 {
@@ -18,13 +19,16 @@ public:
     void go();
     //VAR //////////////////////////////////////////
 
-QGraphicsScene *scene;
+
     QPointF pointF;
     QLineEdit L1,L2,L3;
 
+signals:
+    send_time(int time);
+
     // //////////////////////////////////////
 public slots:
-    void get_in(QGraphicsScene *sc, QPointF point, QLineEdit * time);
+    void get_in(QGraphicsScene *graphicsView, QPointF point, QLineEdit * time);
     void Vrem();
 
 };

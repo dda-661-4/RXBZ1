@@ -36,12 +36,13 @@ public:
     qreal rad0=3;
     QPointF mass[10];
     QPointF point;
+    QPointF p1=point;
     qreal X,Y,X2,Y2;
     QRectF rect;
      int time=0;
      QRect t_rect;
     QTimer *timer;
-
+    QGraphicsScene  *scene;
 
 // ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 private slots:
@@ -51,18 +52,24 @@ private slots:
 
     void vrem();
 
+    void rec_time(int time);
+
    // void slotTimerAlarm();
 
 private:
     Ui::MainWindow *ui;
     //Grid * item;
-   QGraphicsScene  *scene;
+
+
+
     QPixmap image;
     QImage *imageObject;
     //QPainter painter;
      QString imagePath;
 
      void mousePressEvent(QMouseEvent *event);
+
+
 
 signals:
      send(QGraphicsScene* ,QPointF,QLineEdit *);

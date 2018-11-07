@@ -10,9 +10,7 @@
 #include "tcl.h"
 #include <windows.h>
 
-
  int schetchic=0;
-
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -79,6 +77,7 @@ void MainWindow::mousePressEvent(QMouseEvent *event)
 {
      len=4;
      point = ui->graphicsView->mapFromParent(event->pos());
+     send(scene , point,ui-> time);
      if(event->button()==Qt::LeftButton)
      {
        vrem();
@@ -180,7 +179,6 @@ void MainWindow::on_go_clicked()
     Tcl *c=new Tcl();
 
     connect(this,SIGNAL(send(QGraphicsScene*,QPointF,QLineEdit*)),c,SLOT(get_in(QGraphicsScene*,QPointF,QLineEdit*)));
-    send(scene , point,ui-> time);
 
     /*timer= new QTimer();
     connect(timer,SIGNAL(timeout()),this,SLOT(slotTimerAlarm()));
@@ -193,16 +191,40 @@ void MainWindow::on_go_clicked()
 void MainWindow::on_OK_NEWS_clicked()
 {
     angl=ui->ANGLE->text().toInt();
+    //ui->
 }
 
 void MainWindow::vrem()
 {
   Tcl *t=new Tcl();
+  connect(t,SIGNAL(send_time(int)),this,SLOT(rec_time(int)));
 
   QtConcurrent::run(t,&Tcl::Vrem);
 
   qDebug()<<22222;
   //  Sleep(1000);
+}
+
+int vre;
+QPointF p2;
+QLineF line;
+qreal leng=3;
+
+void MainWindow::rec_time(int time)
+{
+    vre=time;
+    qDebug()<<vre;
+
+
+    line.setP1(point);
+    line.setAngle(90);
+    line.setLength(leng);
+    leng=leng+10;
+    //p1=line.p2();
+
+    scene->addLine(line,QPen(Qt::green));
+
+   // scene->addEllipse(vre,vre,vre,vre,QPen(Qt::red));
 }
 
 
