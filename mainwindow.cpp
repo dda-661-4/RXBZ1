@@ -7,9 +7,12 @@
 #include <QRectF>
 #include <QGraphicsView>
 #include <QWidget>
-#include <QMutex>
+#include "tcl.h"
+#include <windows.h>
+
 
  int schetchic=0;
+
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -18,18 +21,16 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     scene= new QGraphicsScene();
     ui->graphicsView->setScene(scene);
-
     ui->graphicsView->setRenderHint(QPainter::Antialiasing);
     ui->graphicsView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff); // Отключаем скроллбар по вертикали
     ui->graphicsView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-
     scene->setSceneRect(0,0,500,500);
+
+
+    //QtConcurrent::run(&m,&MainWindow::vremy);
 
     MainWindow::on_go_clicked();
 
-    timer= new QTimer();
-    connect(timer,SIGNAL(timeout()),this,SLOT(slotTimerAlarm()));
-      timer->start(1000);
 }
 
 MainWindow::~MainWindow()
@@ -37,7 +38,7 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::slotTimerAlarm()
+/*void MainWindow::slotTimerAlarm()
 {
  QLineF line;
      time++;
@@ -54,59 +55,39 @@ void MainWindow::slotTimerAlarm()
          X=point.x();
          Y=point.y();
       line.setP1(point);
-     // bool check=false;
-     // QLineF l;
 
        line.setLength(len);
-      // line.setAngle(angl);
+
        point=line.p2();
 
        X2=line.x2();
        Y2=line.y2();
 
-      /* for(int g=0;g<schetchic;g++)
-       {
-           l.setLine(mass[g].x(),mass[g].y(),X2,Y2);
-           if((X2-mass[g].x())*(X2-mass[g].x())+(Y2-mass[g].y())*(Y2-mass[g].y())<(time+rad)*(time+rad))
-           {
-               check = true;
-             //  break;
-           }
-       }*/
-
        qreal radius=t/2;
        rect.setRect(X2-radius,Y2-radius,t,t);
        scene->addEllipse(rect,QPen(Qt::green));
-       /* if(check==true)
-       {
-          //break;
-       }*/
+
        len=len+1;
   }
-
-  // len=4;*/
-
-//scene->addLine(line,QPen(Qt::red));
 
       qDebug()<<" L ";
 
            ui->time->setText(QString::number(time));
-           //qDebug()<<"time1";
 }
-
+*/
 void MainWindow::mousePressEvent(QMouseEvent *event)
 {
-
-    len=4;
+     len=4;
      point = ui->graphicsView->mapFromParent(event->pos());
-
      if(event->button()==Qt::LeftButton)
      {
-         time=0;
-         t=5;
-         L=true;
-     }
+       vrem();
 
+         // emit send(scene,point,ui->thread1,ui->thread2,ui->thread3);
+        // time=0;
+         //t=5;
+        // L=true;
+     }
    /*if(event->button()==Qt::LeftButton)
      {
              qDebug()<<"time";
@@ -196,13 +177,34 @@ void MainWindow::on_go_clicked()
                 }                                                  //    solidline      ( 35 80 124),qt:: SolidPattern
             }
 
+    Tcl *c=new Tcl();
+
+    connect(this,SIGNAL(send(QGraphicsScene*,QPointF,QLineEdit*)),c,SLOT(get_in(QGraphicsScene*,QPointF,QLineEdit*)));
+    send(scene , point,ui-> time);
+
+    /*timer= new QTimer();
+    connect(timer,SIGNAL(timeout()),this,SLOT(slotTimerAlarm()));
+      timer->start(1000);
+*/
     R=false;
     L=false;
-
 }
 
 void MainWindow::on_OK_NEWS_clicked()
 {
     angl=ui->ANGLE->text().toInt();
 }
+
+void MainWindow::vrem()
+{
+  Tcl *t=new Tcl();
+
+  QtConcurrent::run(t,&Tcl::Vrem);
+
+  qDebug()<<22222;
+  //  Sleep(1000);
+}
+
+
+
 
