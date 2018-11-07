@@ -34,8 +34,8 @@ public:
     qreal angl=90;
     qreal rad=6;
     qreal rad0=3;
-    QPointF mass[10];
-    QPointF point;
+    QPointF mass[1000];
+    QPointF point,pointR;
     QPointF p1=point;
     qreal X,Y,X2,Y2;
     QRectF rect;
@@ -70,9 +70,11 @@ private:
      void mousePressEvent(QMouseEvent *event);
 
 
-
 signals:
-     send(QGraphicsScene* ,QPointF,QLineEdit *);
+     send(QGraphicsScene* ,QLineEdit *);
+     send_coor(QPointF);
+     send_true();
+     send_false();
 
 };
 

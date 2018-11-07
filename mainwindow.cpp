@@ -11,6 +11,10 @@
 #include <windows.h>
 
  int schetchic=0;
+ int vre;
+ QPointF p2;
+ QLineF line;
+ qreal leng=3;
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -25,6 +29,7 @@ MainWindow::MainWindow(QWidget *parent) :
     scene->setSceneRect(0,0,500,500);
 
 
+
     //QtConcurrent::run(&m,&MainWindow::vremy);
 
     MainWindow::on_go_clicked();
@@ -35,6 +40,7 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
+
 
 /*void MainWindow::slotTimerAlarm()
 {
@@ -73,19 +79,19 @@ MainWindow::~MainWindow()
            ui->time->setText(QString::number(time));
 }
 */
+
+int j=0;
 void MainWindow::mousePressEvent(QMouseEvent *event)
 {
-     len=4;
-     point = ui->graphicsView->mapFromParent(event->pos());
-     send(scene , point,ui-> time);
-     if(event->button()==Qt::LeftButton)
+     send_true();
+     if(event->button()==Qt::LeftButton&&R==false)
      {
-       vrem();
+          point = ui->graphicsView->mapFromParent(event->pos());
+         send_coor(point);
 
-         // emit send(scene,point,ui->thread1,ui->thread2,ui->thread3);
-        // time=0;
-         //t=5;
-        // L=true;
+         qDebug()<<22222;
+       vrem();
+          R=true;
      }
    /*if(event->button()==Qt::LeftButton)
      {
@@ -147,9 +153,10 @@ void MainWindow::mousePressEvent(QMouseEvent *event)
            */
     if(event->button()==Qt::RightButton)
       {
-        mass[schetchic]=point;
-        X=point.x();
-        Y=point.y();
+          pointR = ui->graphicsView->mapFromParent(event->pos());
+        mass[schetchic]=pointR;
+        X=pointR.x();
+        Y=pointR.y();
 
         rect.setRect(X-3,Y-3,rad0,rad0);
         scene->addEllipse(rect,QPen(Qt::yellow));
@@ -178,7 +185,12 @@ void MainWindow::on_go_clicked()
 
     Tcl *c=new Tcl();
 
-    connect(this,SIGNAL(send(QGraphicsScene*,QPointF,QLineEdit*)),c,SLOT(get_in(QGraphicsScene*,QPointF,QLineEdit*)));
+    connect(this,SIGNAL(send(QGraphicsScene*,QLineEdit*)),c,SLOT(get_in(QGraphicsScene*,QLineEdit*)));
+    send(scene ,ui-> time);
+     connect(this,SIGNAL(send_coor(QPointF)),c,SLOT(get_coor(QPointF)));
+     connect(this,SIGNAL(send_false()),c,SLOT(set_false()));
+       connect(this,SIGNAL(send_true()),c,SLOT(set_true()));
+       send_false();
 
     /*timer= new QTimer();
     connect(timer,SIGNAL(timeout()),this,SLOT(slotTimerAlarm()));
@@ -186,11 +198,17 @@ void MainWindow::on_go_clicked()
 */
     R=false;
     L=false;
+
+    leng=3;
+    time=0;
+
 }
 
 void MainWindow::on_OK_NEWS_clicked()
 {
     angl=ui->ANGLE->text().toInt();
+    Tcl t;
+    t.~Tcl();
     //ui->
 }
 
@@ -205,26 +223,20 @@ void MainWindow::vrem()
   //  Sleep(1000);
 }
 
-int vre;
-QPointF p2;
-QLineF line;
-qreal leng=3;
+
 
 void MainWindow::rec_time(int time)
 {
     vre=time;
     qDebug()<<vre;
 
-
     line.setP1(point);
     line.setAngle(90);
     line.setLength(leng);
     leng=leng+10;
-    //p1=line.p2();
 
     scene->addLine(line,QPen(Qt::green));
 
-   // scene->addEllipse(vre,vre,vre,vre,QPen(Qt::red));
 }
 
 

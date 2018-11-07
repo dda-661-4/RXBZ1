@@ -17,19 +17,25 @@ public:
     ~Tcl();
 
     void go();
+
+
     //VAR //////////////////////////////////////////
 
 
     QPointF pointF;
     QLineEdit L1,L2,L3;
 
+
 signals:
     send_time(int time);
 
     // //////////////////////////////////////
 public slots:
-    void get_in(QGraphicsScene *graphicsView, QPointF point, QLineEdit * time);
+    void get_in(QGraphicsScene *graphicsView,  QLineEdit * time);
     void Vrem();
+    void get_coor(QPointF point);
+    void set_false();
+    void set_true();
 
 };
 

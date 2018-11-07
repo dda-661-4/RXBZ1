@@ -7,7 +7,7 @@ qreal X2,Y2,X,Y;
 QRectF rect;
 QGraphicsScene *sc;
 QLineEdit *t;
-
+bool F=true;
 
 Tcl::Tcl()
 {
@@ -20,21 +20,13 @@ Tcl::~Tcl()
 
 }
 
-void Tcl::get_in(QGraphicsScene *scene, QPointF point, QLineEdit* time)
+void Tcl::get_in(QGraphicsScene *scene,  QLineEdit* time)
 {
     sc=scene;
 
-    pointF=point;
-    qDebug()<<pointF;
+    //qDebug()<<pointF;
     t=time;
-    //Tcl *t=new Tcl();
-    //QtConcurrent::run(t,&Tcl::go);
-    QRectF rect;
-    qreal x,y;
-    x=pointF.x();
-    y=pointF.y();
-    rect.setRect(x-75,y-75,150,150);
-    sc->addEllipse(rect,QPen(Qt::red));
+
     qDebug()  << "YAYAYA";
 }
 
@@ -74,25 +66,33 @@ void Tcl::go()
 
 void Tcl::Vrem()
 {
-//QLineF line;
-//qreal len=3;
 qDebug()<<&sc;
-//Tcl *tc=new Tcl();
-//MainWindow *ma=new MainWindow();
-//
-for(;;)
-{
-   // sc->addEllipse(50,50,50,50,QPen(Qt::red));
+
+ while(F)
+ {
      t->setText(QString::number(time));
      time++;
-    /* line.setP1(pointF);
-     line.setAngle(90);
-     line.setLength(len);
-     len=len+10;*/
+
    send_time(time);
 
-     // sc->addLine(line,QPen(Qt::red));
-
     Sleep(1000);
+ }
 }
+
+void Tcl::get_coor(QPointF point)
+{
+    pointF=point;
+    qDebug()<<pointF;
+}
+
+void Tcl::set_false()//power off
+{
+    F=false;
+    time=0;
+       t->setText(QString::number(time));
+}
+
+void Tcl::set_true()
+{
+    F=true;
 }
