@@ -42,7 +42,7 @@ public:
      int time=0;
      QRect t_rect;
     QTimer *timer;
-    QGraphicsScene  *scene;
+    QGraphicsScene  *scene;//,*scene1;
 
 // ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 private slots:
@@ -75,6 +75,12 @@ signals:
      send_coor(QPointF);
      send_true();
      send_false();
+     //  /////
+signals:
+     send_angl(int);
+     send_coord(QPointF);
+     send_speed(int);
+     send_arr(QPointF*);
 
 };
 

@@ -12,7 +12,6 @@ bool F=true;
 Tcl::Tcl()
 {
 
-
 }
 
 Tcl::~Tcl()

@@ -14,9 +14,11 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    tcl.cpp
+    tcl.cpp \
+    paint.cpp
 
 HEADERS  += mainwindow.h \
-    tcl.h
+    tcl.h \
+    paint.h
 
 FORMS    += mainwindow.ui

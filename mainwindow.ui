@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1270</width>
-    <height>709</height>
+    <width>1515</width>
+    <height>862</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,16 +19,19 @@
      <rect>
       <x>50</x>
       <y>20</y>
-      <width>941</width>
-      <height>631</height>
+      <width>1201</width>
+      <height>801</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(255, 255, 255,0);</string>
     </property>
    </widget>
    <widget class="QPushButton" name="go">
     <property name="geometry">
      <rect>
-      <x>1100</x>
-      <y>20</y>
+      <x>1390</x>
+      <y>70</y>
       <width>121</width>
       <height>51</height>
      </rect>
@@ -40,8 +43,8 @@
    <widget class="QLineEdit" name="lineEdit">
     <property name="geometry">
      <rect>
-      <x>1020</x>
-      <y>210</y>
+      <x>1350</x>
+      <y>230</y>
       <width>81</width>
       <height>22</height>
      </rect>
@@ -53,8 +56,8 @@
    <widget class="QLineEdit" name="mashtab">
     <property name="geometry">
      <rect>
-      <x>1020</x>
-      <y>250</y>
+      <x>1340</x>
+      <y>270</y>
       <width>71</width>
       <height>22</height>
      </rect>
@@ -63,7 +66,7 @@
    <widget class="QPushButton" name="OK_NEWS">
     <property name="geometry">
      <rect>
-      <x>1000</x>
+      <x>1260</x>
       <y>20</y>
       <width>93</width>
       <height>81</height>
@@ -76,8 +79,8 @@
    <widget class="QComboBox" name="comboBox">
     <property name="geometry">
      <rect>
-      <x>1150</x>
-      <y>130</y>
+      <x>1430</x>
+      <y>120</y>
       <width>73</width>
       <height>22</height>
      </rect>
@@ -101,8 +104,8 @@
    <widget class="QLineEdit" name="ANGLE">
     <property name="geometry">
      <rect>
-      <x>1020</x>
-      <y>130</y>
+      <x>1260</x>
+      <y>110</y>
       <width>113</width>
       <height>22</height>
      </rect>
@@ -111,8 +114,8 @@
    <widget class="QLineEdit" name="time">
     <property name="geometry">
      <rect>
-      <x>1060</x>
-      <y>170</y>
+      <x>1350</x>
+      <y>190</y>
       <width>71</width>
       <height>22</height>
      </rect>
@@ -121,8 +124,8 @@
    <widget class="QLineEdit" name="lineEdit_2">
     <property name="geometry">
      <rect>
-      <x>1020</x>
-      <y>170</y>
+      <x>1280</x>
+      <y>190</y>
       <width>41</width>
       <height>22</height>
      </rect>
@@ -131,6 +134,38 @@
      <string>Time</string>
     </property>
    </widget>
+   <widget class="QGraphicsView" name="graphicsView_2">
+    <property name="geometry">
+     <rect>
+      <x>50</x>
+      <y>20</y>
+      <width>1201</width>
+      <height>801</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
+    <property name="backgroundBrush">
+     <brush brushstyle="NoBrush">
+      <color alpha="255">
+       <red>0</red>
+       <green>0</green>
+       <blue>0</blue>
+      </color>
+     </brush>
+    </property>
+   </widget>
+   <zorder>go</zorder>
+   <zorder>lineEdit</zorder>
+   <zorder>mashtab</zorder>
+   <zorder>OK_NEWS</zorder>
+   <zorder>comboBox</zorder>
+   <zorder>ANGLE</zorder>
+   <zorder>time</zorder>
+   <zorder>lineEdit_2</zorder>
+   <zorder>graphicsView_2</zorder>
+   <zorder>graphicsView</zorder>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="Exit">
