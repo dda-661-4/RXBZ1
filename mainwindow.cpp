@@ -116,7 +116,7 @@ void MainWindow::mousePressEvent(QMouseEvent *event)
      {
           point = ui->graphicsView->mapFromParent(event->pos());
           send_coord(point);
-          send_arr(mass);
+          send_arr(mass,schetchic);
          qreal Xx=point.x();
          qreal Yy=point.y();
           //ui->graphicsView_2->translate(Xx,Yy);
@@ -218,7 +218,8 @@ void MainWindow::on_go_clicked()
     connect(this,SIGNAL(send_angl(int)),my,SLOT(rec_angl(int)));
     connect(this,SIGNAL(send_coord(QPointF)),my,SLOT(rec_coord(QPointF)));
     connect(this,SIGNAL(send_speed(int)),my,SLOT(rec_speed(int)));
-    connect(this,SIGNAL(send_arr(QPointF*)),my,SLOT(rec_arr(QPointF[])));
+    connect(this,SIGNAL(send_arr(QPointF*,int)),my,SLOT(rec_arr(QPointF*,int)));
+
     connect(this,SIGNAL(send(QGraphicsScene*,QLineEdit*)),c,SLOT(get_in(QGraphicsScene*,QLineEdit*)));
     send(scene ,ui-> time);
      connect(this,SIGNAL(send_coor(QPointF)),c,SLOT(get_coor(QPointF)));
@@ -291,8 +292,6 @@ void MainWindow::rec_time(int time)
     point1=new MyPoint();
     scene1->addItem(point1);
 
-
-
     qDebug()<<point;
 
     /*rect.setRect(X3-h/2,Y3-w/2,w,h);
@@ -314,11 +313,7 @@ void MainWindow::rec_time(int time)
 */
 
     //leng=leng+10;
-
-
-
 }
-
 
 
 

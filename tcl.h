@@ -36,6 +36,7 @@ public slots:
     void get_coor(QPointF point);
     void set_false();
     void set_true();
+    void rec_segv();
 
 };
 

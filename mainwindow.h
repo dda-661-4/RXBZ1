@@ -54,13 +54,12 @@ private slots:
 
     void rec_time(int time);
 
+
    // void slotTimerAlarm();
 
 private:
     Ui::MainWindow *ui;
     //Grid * item;
-
-
 
     QPixmap image;
     QImage *imageObject;
@@ -80,7 +79,7 @@ signals:
      send_angl(int);
      send_coord(QPointF);
      send_speed(int);
-     send_arr(QPointF*);
+     send_arr(QPointF*,int);
 
 };
 

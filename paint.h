@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QGraphicsItem>
 #include <QPainter>
+#include "tcl.h"
 
 /* Чтобы работали СЛОТЫ и СИГНАЛЫ, наследуемся от QOBJECT,
  * */
@@ -18,7 +19,9 @@ public slots:
     void rec_angl(int angl);
     void rec_coord(QPointF point);
     void rec_speed(int leng);
-    void rec_arr(QPointF mass[]);
+    void rec_arr(QPointF* mass,int schetchic);
+signals:
+    send_segv();
 
 
 private:

@@ -39,10 +39,6 @@ void Tcl::go()
            line.setAngle(90);
            line.setLength(len);
 
-          //sc->addEllipse(50,50,50,50,QPen(Qt::red));
-
-           //scene->addLine(line,QPen(Qt::red));
-
            X2=line.x2();
            Y2=line.y2();
            X=pointF.x();
@@ -94,4 +90,11 @@ void Tcl::set_false()//power off
 void Tcl::set_true()
 {
     F=true;
+}
+
+void Tcl::rec_segv()
+{
+    F=false;
+
+        qDebug()<<22222222222;
 }
